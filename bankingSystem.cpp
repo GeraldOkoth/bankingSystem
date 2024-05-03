@@ -1,20 +1,20 @@
 //Banking system
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 /**
  * This is a simple program which implements a banking system
- *
+ * User can log in as sales person or bank client by authenticating details
  *
  */
 
-//Global variable declaration.
-int interest1;
+//Global variable declaration
+float refund, loanAmount, time, rate;
 //function declaration/prototype.
-int interest(int principal, int intRate, int time);
+float simpleInterest();
 void salesPersonOperations();
 void clientOperations();
-void simpleInterest();
 
 int main()
 {
@@ -73,7 +73,7 @@ void clientOperations()
     cout << "Please select an option below for the transaction you want to perform: " <<endl <<endl;
 
     cout << "---options---" <<endl;
-    cout << "1. Deposit Cash" <<endl << "2. Withdraw Cash" <<endl << "3. Check Account Balance" <<endl << "4. Exit" <<endl <<endl;
+    cout << "1. Deposit Cash" <<endl << "2. Withdraw Cash" <<endl << "3. Check Account Balance" <<endl << "4. Access loan" <<endl << "5. Exit" <<endl <<endl;
 
     cin >> selectAction;
 
@@ -95,9 +95,14 @@ void clientOperations()
             cout << "Please enter Your pin: ";
             cin >> pin;
             cout << "Executing..." <<endl;
-            cout << "\nYou withdrew Ksh. " << withdrawAmount << ". Your account balance is Ksh. " << withdrawAmount << endl;
+            cout << "Your account balance is Ksh. " << depositAmount << endl;
             break;
         case 4:
+            cout << "Please enter amount: ";
+            cin >> loanAmount;
+            cout << "Your repayable amount is Ksh." <<simpleInterest() << " over a period of " <<time << " years" << " at an interest rate of " <<rate <<"%" <<endl;
+            break;
+        case 5:
             exit(0);
             break;
         default:
@@ -106,21 +111,56 @@ void clientOperations()
 }
 
 //Function to perform simple interest
-void simpleInterest()
+//Function to perform simple interest
+float simpleInterest()
 {
-    int principal;
-    int rate;
-    int time;
-    int interest;
+    if (loanAmount <= 5000)
+    {
+        time = 0.5;
+        rate = 0.08;
+    }
+    else if (loanAmount <= 10000)
+    {
+        time = 1;
+        rate = 0.16;
+    }
+    else if (loanAmount <= 20000)
+    {
+        time = 1.5;
+        rate = 0.32;
+    }
+    else if (loanAmount <= 40000)
+    {
+        time = 2;
+        rate = 0.64;
+    }
+    else if (loanAmount <= 80000)
+    {
+        time = 2.5;
+        rate = 1.28;
+    }
+    else if (loanAmount <= 200000)
+    {
+        time = 3;
+        rate = 2.56;
+    }
+    else if (loanAmount <= 500000)
+    {
+        time = 3.5;
+        rate = 5.12;
+    }
+    else if (loanAmount <= 1000000)
+    {
+        time = 4;
+        rate = 10.24;
+    }
+    else
+    {
+        cout << "You can not borrow more than Ksh." << loanAmount << endl << endl;
+        return 0; // Return 0 if loan amount exceeds the maximum allowed
+    }
 
-    cout << "Please enter the principal amount:ksh. ";
-    cin >> principal;
-    cout << "Please enter the rate: ";
-    cin >> rate;
-    cout << "Please enter time: ";
-    cin >> time;
-
-    interest = (principal*rate*time)/100;
-    cout <<endl << "The simple interest is ksh. " << interest << " from the details you input: " << endl <<"principal:ksh. " <<principal <<endl  << "rate: " <<rate <<"%" <<endl  << "time: "  <<time <<"years" <<endl;
-
+    refund = loanAmount + (loanAmount * rate * time);
+    return refund;
 }
+
