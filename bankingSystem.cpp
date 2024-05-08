@@ -5,16 +5,16 @@
 using namespace std;
 /**
  * This is a simple program which implements a banking system
- * User can log in as sales person or bank client by authenticating details
+ * User can log in as sales person or bank client
  *
  */
 
-//Global variable declaration
+//Global variable declaration.
 float refund, loanAmount, time, rate;
 //function declaration/prototype.
 float simpleInterest();
-void salesPersonOperations();
-void clientOperations();
+void salesPersonTransactions();
+void clientTransactions();
 
 int main()
 {
@@ -26,30 +26,27 @@ int main()
     cout << "\t\t\t\t\t\t======E-Banking System======" <<endl;
     cout << "\t\t\t\t\t\t      --------------" <<endl;
 
-    cout << "Welcome!" <<endl <<endl;
-    cout << "Login as..." <<endl;
-    cout << "1. Sales Person" <<endl;
-    cout << "2. Client" <<endl <<endl;
+    cout << "Welcome!" <<endl <<endl << "Login as..." <<endl << "1. Sales Person" <<endl << "2. Client" <<endl <<endl;
     cin >> user;
 
     switch(user)
     {
         case 1:
             cout << "You are logged in as salesperson." <<endl;
-            salesPersonOperations();
+            salesPersonTransactions();
             break;
         case 2:
             cout << "You are logged in as bank client." <<endl;
-            clientOperations();
+            clientTransactions();
             break;
         default:
-            cout << "You entered an invalid selection" <<endl;
+            cout << "Option not available." <<endl;
     }
     return 0;
 }
 
 //Function to executed Sale's Person operations
-void salesPersonOperations()
+void salesPersonTransactions()
 {
     int bonus = 200;
     float commission;
@@ -65,37 +62,43 @@ void salesPersonOperations()
     cout << "Your earnings for last week is: " <<earnings <<endl;
 }
 //Function to executed client's operations
-void clientOperations()
+void clientTransactions()
 {
-    int pin, selectAction, user;
+    int pin, selectTransaction, user;
     float depositAmount, withdrawAmount;
+    float accBalance = 0;
 
-    cout << "Please select an option below for the transaction you want to perform: " <<endl <<endl;
+    cout << "Please select transaction: " <<endl <<endl;
 
     cout << "---options---" <<endl;
     cout << "1. Deposit Cash" <<endl << "2. Withdraw Cash" <<endl << "3. Check Account Balance" <<endl << "4. Access loan" <<endl << "5. Exit" <<endl <<endl;
 
-    cin >> selectAction;
+    cin >> selectTransaction;
 
-    switch(selectAction)
+    switch(selectTransaction)
     {
         case 1:
             cout << "Please enter amount to deposit: ";
             cin >> depositAmount;
             cout << "Executing..." <<endl;
-            cout << "\nYou deposited Ksh. " << depositAmount << ". Your account balance is Ksh. " << depositAmount << endl;
+            if (depositAmount > 0)
+            {
+                accBalance += depositAmount;
+            }
+            cout << "\nYou deposited Ksh. " << depositAmount << ". Your account balance is Ksh. " << accBalance << endl;
             break;
         case 2:
             cout << "Please enter amount to withdraw: ";
             cin >> withdrawAmount;
             cout << "Executing..." <<endl;
-            cout << "\nYou withdrew Ksh. " << withdrawAmount << ". Your account balance is Ksh. " << withdrawAmount << endl;
+            accBalance -= withdrawAmount;
+            cout << "\nYou withdrew Ksh. " << withdrawAmount << ". Your account balance is Ksh. " << accBalance << endl;
             break;
         case 3:
             cout << "Please enter Your pin: ";
             cin >> pin;
             cout << "Executing..." <<endl;
-            cout << "Your account balance is Ksh. " << depositAmount << endl;
+            cout << "Your account balance is Ksh. " << accBalance << endl;
             break;
         case 4:
             cout << "Please enter amount: ";
@@ -110,7 +113,6 @@ void clientOperations()
     }
 }
 
-//Function to perform simple interest
 //Function to perform simple interest
 float simpleInterest()
 {
