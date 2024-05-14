@@ -1,2 +1,2 @@
-
-## This repository implements a simple _banking system_
+## Bank System
+An implementation of a simple _banking system_
